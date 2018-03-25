@@ -2,24 +2,54 @@ package beak_6603;
 
 import java.util.*;
 
+
 public class Main {
-    private volatile int count = 0;
-    private void run() throws InterruptedException {
-        Thread t1 = new Thread(() -> {
-                               for (int i = 0; i < 100000; i++) { count++; }
-                               });
-        Thread t2 = new Thread(() -> {
-                               for (int i = 0; i < 100000; i++) { count++; }
-                               });
-        t1.start();
-        t2.start();
-
-        t1.join();
-        t2.join();
-
-        System.out.println(count);
+	
+	static int testcase;
+    	static int value_arr [];
+    	static int result [];
+	public static void main(String[] args) throws Exception {
+        
+        Scanner sc = new Scanner(System.in);
+        
+        
+        	
+        while(true) {
+        		testcase = sc.nextInt();	
+        		if (testcase == 0) break;
+        		
+        		value_arr = new int [testcase+1];
+        		result = new int [testcase+1];
+        		
+        		for (int i=0; i<testcase; i++) {
+        			value_arr[i] = sc.nextInt();
+        		}
+        		
+        		dfs(0,0);
+        		
+        }
     }
-    public static void main(String[] args) throws Exception {
-        new Main().run();
+    
+    public static void dfs (int start, int depth) {
+    		
+	    	if(depth == 6) {
+	    		print();
+	    	}
+	    	
+	    	for(int i=start; i<testcase; i++) {
+	    		result[i] = 1;
+	    		dfs(i+1, depth+1);
+	    		result[i] = 0;
+	    	}
+	    	
+    }
+    
+    public static void print ()
+    {
+    		for(int i=0; i<testcase; i++) {
+    			if(result[i]==1)
+    				System.out.print(value_arr[i] + " ");
+    		}
+    		System.out.println();
     }
 }
