@@ -3,6 +3,7 @@ import java.util.*;
 public class Main {
 	
 	static boolean checked[];
+	static boolean finished[];
 	static int arr[];
 	static int pos;
 	static int cur;
@@ -17,13 +18,11 @@ public class Main {
 			int index = sc.nextInt();
 			arr = new int[index+1];
 			checked = new boolean[index+1];
+			finished = new boolean[index+1];
 			for(int i=1; i<=index; i++) arr[i] = sc.nextInt();
 			
 			for(int i=1; i<=index; i++) {
-				checked[i] = true;
 				dfs(i);
-				cur = i;
-				checked[i] = false;
 			}
 			System.out.println(index - pos);
 			
@@ -32,13 +31,22 @@ public class Main {
 	}
 	
 	public static void dfs(int start) {
-		if(!checked[arr[start]]) {
-			checked[arr[start]] = true;
-			dfs(arr[start]);
-			checked[arr[start]] = false;
-		}
 		
-		if(arr[start-1] == cur)pos++;
+		checked[start] = true;
+		int next = arr[start];
+		if(checked[next]) {
+			if(!finished[next]) {
+				for(int temp = next; start != temp; temp = arr[temp]) {
+					pos++;
+				}
+				pos++;
+			}	
+		}
+		else {
+			dfs(next);
+		}
+		finished[start] = true;
+		
 	}
 
 }
