@@ -9,7 +9,7 @@ public class Main {
 	static int result[];
 	static boolean checked[];
 	static int count =0;
- 
+	static Queue <Integer> queue;
 	public static void main(String[] args) {
 		Scanner sc =new Scanner(System.in);
 		n = sc.nextInt();
@@ -23,18 +23,18 @@ public class Main {
 			int x = sc.nextInt();
 			int y = sc.nextInt();
 		
-			map[x].add(y);
+			map[y].add(x);
 		}
 		
 		result = new int[n+1];
+		queue = new LinkedList();
 		for(int i=1; i<=n; i++) {
 			checked = new boolean[n+1];
-			dfs(i);
+			//dfs(i);
+			bfs(i);
 		}
 		
-		for(int i : map[3])
-			System.out.println(i);
-		 
+	
 		int max = Integer.MIN_VALUE;
 		
 		int result_v2[] = new int[n+1];
@@ -62,19 +62,43 @@ public class Main {
 
 	}
 	
-	public static void dfs(int x) {
+	public static void bfs(int x) {
 		
-		checked[x] = true;
-		
-		for(int i : map[x]) {
-			if(!checked[i]) {
-				dfs(i);
-				result[i]++;
-				
+		queue.add(x);
+		int s;
+		while(!queue.isEmpty()) {
+			s = queue.peek();
+			queue.remove();
+			result[x]++;
+			checked[s] = true;
+			
+			for(int i : map[s]) {
+				if(!checked[i]) {
+					queue.add(i);
+					checked[i] =true;
+				}
 			}
+			
+			
+			
 		}
-	 
+		
+		
 	}
+	
+//	public static void dfs(int x) {
+//		
+//		checked[x] = true;
+//		
+//		for(int i : map[x]) {
+//			if(!checked[i]) {
+//				dfs(i);
+//				result[i]++;
+//				
+//			}
+//		}
+//	 
+//	}
 
 }
 
