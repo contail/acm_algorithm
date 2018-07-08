@@ -26,8 +26,7 @@ public class Main {
 			if(max < dp[i])
 				max = dp[i];
 			
-		}
-		
+		}		
 		System.out.print(max);
 		// TODO Auto-generated method stub
 
